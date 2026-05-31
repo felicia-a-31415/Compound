@@ -17,4 +17,26 @@ enum Pillar: String, CaseIterable, Hashable, Identifiable {
     }
 
     var tagBackground: Color { color.opacity(0.10) }
+
+    var iconName: String {
+        switch self {
+        case .smarter: "book.closed.fill"
+        case .hotter:  "bolt.fill"
+        case .richer:  "chart.line.uptrend.xyaxis"
+        case .happier: "heart.fill"
+        }
+    }
+
+    var tagline: String {
+        switch self {
+        case .smarter:
+            "Study science and deep focus. For grades, exams, and skills that actually stick."
+        case .hotter:
+            "Fitness, skincare, sleep, and nutrition. Confidence that comes from showing up for your body."
+        case .richer:
+            "Budgeting and income basics. The financial foundations most students were never taught."
+        case .happier:
+            "Stress, motivation, and self-confidence. Evidence-based — no wellness fluff."
+        }
+    }
 }
