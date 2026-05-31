@@ -92,7 +92,7 @@ struct HomeView: View {
         HStack(alignment: .firstTextBaseline, spacing: 7) {
             Text("\(streakDays)")
                 .font(.displayNumber)
-                .foregroundStyle(Color.appPrimary)
+                .foregroundStyle(Color.brandTealBlue)
             VStack(alignment: .leading, spacing: 0) {
                 Text("day")
                 Text("streak")

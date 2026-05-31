@@ -9,14 +9,14 @@ enum Pillar: String, CaseIterable, Hashable, Identifiable {
 
     var color: Color {
         switch self {
-        case .smarter: Color(hex: "3B5BDB")
-        case .hotter:  Color(hex: "C2255C")
-        case .richer:  Color(hex: "E67700")
-        case .happier: Color(hex: "2F9E44")
+        case .smarter: .brandTealBlue
+        case .hotter:  .accentWarmPink
+        case .richer:  .brandTurquoise
+        case .happier: .brandFrostedBlue
         }
     }
 
-    var tagBackground: Color { color.opacity(0.10) }
+    var tagBackground: Color { .appTagBackground }
 
     var iconName: String {
         switch self {
@@ -29,14 +29,10 @@ enum Pillar: String, CaseIterable, Hashable, Identifiable {
 
     var tagline: String {
         switch self {
-        case .smarter:
-            "Study science and deep focus. For grades, exams, and skills that actually stick."
-        case .hotter:
-            "Fitness, skincare, sleep, and nutrition. Confidence that comes from showing up for your body."
-        case .richer:
-            "Budgeting and income basics. The financial foundations most students were never taught."
-        case .happier:
-            "Stress, motivation, and self-confidence. Evidence-based — no wellness fluff."
+        case .smarter: "Grades, focus, and learning to learn."
+        case .hotter:  "Fitness, sleep, skincare, and nutrition."
+        case .richer:  "Money basics most students were never taught."
+        case .happier: "Stress, confidence, and motivation."
         }
     }
 }
