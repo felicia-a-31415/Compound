@@ -1,21 +1,25 @@
-//
-//  ContentView.swift
-//  Compound
-//
-//  Created by Felicia on 2026-05-30.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selectedTab = 0
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView(selection: $selectedTab) {
+            HomeView(selectedTab: $selectedTab)
+                .tabItem { Label("Home", systemImage: "house") }
+                .tag(0)
+
+            Color.appBackground
+                .ignoresSafeArea()
+                .tabItem { Label("Progress", systemImage: "chart.line.uptrend.xyaxis") }
+                .tag(1)
+
+            Color.appBackground
+                .ignoresSafeArea()
+                .tabItem { Label("Profile", systemImage: "person") }
+                .tag(2)
         }
-        .padding()
+        .tint(Color.appPrimary)
     }
 }
 
