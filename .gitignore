@@ -1,0 +1,14 @@
+# Xcode
+*.xcuserstate
+xcuserdata/
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+DerivedData/
+.build/
+
+# macOS
+.DS_Store
+
+# API keys — never commit
+Compound/Services/APIKeys.swift

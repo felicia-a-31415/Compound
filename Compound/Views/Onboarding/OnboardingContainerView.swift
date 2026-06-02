@@ -7,8 +7,9 @@ struct OnboardingContainerView: View {
     @State private var selectedPillars: Set<Pillar> = []
     @State private var intakeAnswers: [String: String] = [:]
     @State private var step: Step = .pillarSelection
+    @State private var goingForward = true
 
-    private enum Step: Equatable { case pillarSelection, intake }
+    private enum Step: Equatable { case pillarSelection, intake, roadmap }
 
     var body: some View {
         ZStack {
@@ -16,28 +17,47 @@ struct OnboardingContainerView: View {
             case .pillarSelection:
                 PillarSelectionView(selectedPillars: $selectedPillars) {
                     selectedPillarKeys = selectedPillars.map(\.rawValue).joined(separator: ",")
-                    step = .intake
+                    advance(to: .intake)
                 }
-                .transition(.asymmetric(
-                    insertion: .move(edge: .leading).combined(with: .opacity),
-                    removal: .move(edge: .leading).combined(with: .opacity)
-                ))
+                .transition(slide)
 
             case .intake:
                 IntakeQuestionsView(
                     selectedPillars: selectedPillars,
                     onComplete: { answers in
                         intakeAnswers = answers
-                        hasCompletedOnboarding = true
+                        advance(to: .roadmap)
                     },
-                    onBack: { step = .pillarSelection }
+                    onBack: { retreat(to: .pillarSelection) }
                 )
-                .transition(.asymmetric(
-                    insertion: .move(edge: .trailing).combined(with: .opacity),
-                    removal: .move(edge: .trailing).combined(with: .opacity)
-                ))
+                .transition(slide)
+
+            case .roadmap:
+                RoadmapRevealView(
+                    selectedPillars: selectedPillars,
+                    intakeAnswers: intakeAnswers,
+                    onComplete: { hasCompletedOnboarding = true }
+                )
+                .transition(slide)
             }
         }
         .animation(.spring(response: 0.40, dampingFraction: 0.90), value: step)
+    }
+
+    private var slide: AnyTransition {
+        .asymmetric(
+            insertion: .move(edge: goingForward ? .trailing : .leading).combined(with: .opacity),
+            removal:   .move(edge: goingForward ? .leading  : .trailing).combined(with: .opacity)
+        )
+    }
+
+    private func advance(to next: Step) {
+        goingForward = true
+        step = next
+    }
+
+    private func retreat(to previous: Step) {
+        goingForward = false
+        step = previous
     }
 }
